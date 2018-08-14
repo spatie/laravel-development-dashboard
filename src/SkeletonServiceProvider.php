@@ -1,14 +1,11 @@
 <?php
 
-namespace Spatie\Skeleton;
+namespace Spatie\DevelopmentDashboard;
 
 use Illuminate\Support\ServiceProvider;
 
-class SkeletonServiceProvider extends ServiceProvider
+class DevelopmentDashboardServiceProvider extends ServiceProvider
 {
-    /**
-     * Bootstrap the application services.
-     */
     public function boot()
     {
         if ($this->app->runningInConsole()) {
@@ -31,6 +28,6 @@ class SkeletonServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->mergeConfigFrom(__DIR__.'/../config/config.php', 'skeleton');
+        $this->mergeConfigFrom(__DIR__.'/../config/development-dashboard.php', 'development-dashboard');
     }
 }
