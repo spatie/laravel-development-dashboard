@@ -5,7 +5,7 @@ namespace Spatie\DevelopmentDashboard\Http\Controllers;
 use Illuminate\Http\Request;
 use Spatie\DevelopmentDashboard\Report;
 
-class ReportController
+class ReportsController
 {
     public function index(Request $request)
     {
