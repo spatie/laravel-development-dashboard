@@ -56,17 +56,7 @@ class DevelopmentDashboard
                 return [$collector->name() => $collector->collectedData()];
             })
             ->pipe(function(Collection $collectedData) {
-                $this->writeToFile($collectedData->toArray());
+                Report::createFromData($collectedData->toArray());
             });
-
-    }
-
-    protected function writeToFile(array $data)
-    {
-        $fileName = date('Ymd-his') . '-' . Str::uuid() . '.json';
-
-        $fullPath = config('development-dashboard.storage_directory') . '/' . $fileName;
-
-        file_put_contents($fullPath, json_encode($data));
     }
 }

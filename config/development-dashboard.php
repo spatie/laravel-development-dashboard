@@ -3,10 +3,16 @@
 return [
     'enabled' => env('DEVELOPMENT_DASHBOARD_ENABLED', env('APP_DEBUG', false)),
 
-    'storage_path' => storage_path('development-dashboard'),
+    'storage' => [
+        'path' => storage_path('development-dashboard'),
+
+        'maximum_number_of_kept_reports' => 50,
+    ],
 
     'collectors' => [
         \Spatie\DevelopmentDashboard\Collectors\LaravelCollector::class,
         \Spatie\DevelopmentDashboard\Collectors\QueryCollector::class,
-    ]
+    ],
+
+
 ];

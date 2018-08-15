@@ -4,7 +4,7 @@ namespace Spatie\DevelopmentDashboard;
 
 use Illuminate\Foundation\Http\Kernel;
 use Illuminate\Support\ServiceProvider;
-use Spatie\DevelopmentDashboard\Http\Middleware\DevelopmentDashboard as DevelopmentDashboardMiddleware;
+use Spatie\DevelopmentDashboard\Http\Middleware\CollectData;
 
 class DevelopmentDashboardServiceProvider extends ServiceProvider
 {
@@ -28,7 +28,7 @@ class DevelopmentDashboardServiceProvider extends ServiceProvider
 
         $this->app->alias(DevelopmentDashboard::class, 'development-dashboard');
 
-        $this->app[Kernel::class]->pushMiddleware(DevelopmentDashboardMiddleware::class);
+        $this->app[Kernel::class]->pushMiddleware(CollectData::class);
     }
 
     public function register()

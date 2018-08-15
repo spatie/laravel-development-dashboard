@@ -4,14 +4,14 @@ namespace Spatie\DevelopmentDashboard\Http\Middleware;
 
 use Closure;
 use Exception;
-use Spatie\DevelopmentDashboard\DevelopmentDashboard as Dashboard;
+use Spatie\DevelopmentDashboard\DevelopmentDashboard;
 
-class DevelopmentDashboard
+class CollectData
 {
     /** @var \Spatie\DevelopmentDashboard\DevelopmentDashboard */
     protected $developmentDashboard;
 
-    public function __construct(Dashboard $developmentDashboard)
+    public function __construct(DevelopmentDashboard $developmentDashboard)
     {
         $this->developmentDashboard = $developmentDashboard;
     }

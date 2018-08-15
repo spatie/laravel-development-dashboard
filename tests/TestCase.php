@@ -11,7 +11,8 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Schema;
 use Orchestra\Testbench\TestCase as Orchestra;
 use Spatie\DevelopmentDashboard\DevelopmentDashboardServiceProvider;
-use Spatie\DevelopmentDashboard\Http\Middleware\DevelopmentDashboard;
+use Spatie\DevelopmentDashboard\Http\Middleware\CollectData;
+use Spatie\DevelopmentDashboard\Report;
 use Symfony\Component\Finder\SplFileInfo;
 
 abstract class TestCase extends Orchestra
@@ -37,10 +38,10 @@ abstract class TestCase extends Orchestra
     {
         $this->initializeDirectory($this->getTempDirectory());
 
-        $app['config']->set('development-dashboard.storage_directory', $this->getTempDirectory());
+        $app['config']->set('development-dashboard.storage.path', $this->getTempDirectory());
         $app['config']->set('development-dashboard.enabled', true);
 
-        $app[Kernel::class]->pushMiddleware(DevelopmentDashboard::class);
+        $app[Kernel::class]->pushMiddleware(CollectData::class);
 
         $this->setUpDatabase($app);
     }
@@ -69,34 +70,20 @@ abstract class TestCase extends Orchestra
         });
     }
 
-    public function getTempDirectory()
+    protected function getTempDirectory()
     {
         return __DIR__ . '/temp';
     }
 
-    public function assertJsonStructure(array $expectedStructure, string $jsonFilePath = null)
+    protected function assertJsonStructure(array $expectedStructure, string $jsonFilePath = null)
     {
-        $jsonFilePath = $jsonFilePath ?? $this->getLatestTempFilePath();
+        $reportContent = [];
 
-        $actualArray = '{}';
-        if ($jsonFilePath) {
-            $json = file_get_contents($jsonFilePath);
+        if ($report = Report::all()->first()) {
+            $reportContent = $report->content();
+        };
 
-            $actualArray = json_decode($json, true);
-        }
-        (new TestResponse(''))->assertJsonStructure($expectedStructure, $actualArray);
-    }
-
-    protected function getLatestTempFilePath(): ?string
-    {
-        $latestFile = collect(File::allFiles($this->getTempDirectory()))
-            ->sortByDesc(function (SplFileInfo $file) {
-
-                return $file->getMTime();
-            })
-            ->first();
-
-        return optional($latestFile)->getPathname();
+        (new TestResponse(''))->assertJsonStructure($expectedStructure, $reportContent);
     }
 
     protected function performRequest(Closure $callable = null)
