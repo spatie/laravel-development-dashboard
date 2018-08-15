@@ -7,5 +7,6 @@ return [
 
     'collectors' => [
         \Spatie\DevelopmentDashboard\Collectors\LaravelCollector::class,
+        \Spatie\DevelopmentDashboard\Collectors\QueryCollector::class,
     ]
 ];

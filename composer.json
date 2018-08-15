@@ -50,7 +50,10 @@
         "laravel": {
             "providers": [
                 "Spatie\\DevelopmentDashboard\\DevelopmentDashboardServiceProvider"
-            ]
+            ],
+            "aliases": {
+                "Projectionist": "Spatie\\DevelopmentDashboard\\Facades\\DevelopmentDashboard"
+            }
         }
     }
 }

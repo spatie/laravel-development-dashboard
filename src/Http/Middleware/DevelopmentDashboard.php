@@ -4,16 +4,16 @@ namespace Spatie\DevelopmentDashboard\Http\Middleware;
 
 use Closure;
 use Exception;
-use Spatie\DevelopmentDashboard\CollectorManager;
+use Spatie\DevelopmentDashboard\DevelopmentDashboard as Dashboard;
 
 class DevelopmentDashboard
 {
-    /** @var \Spatie\DevelopmentDashboard\CollectorManager */
-    protected $collectorManager;
+    /** @var \Spatie\DevelopmentDashboard\DevelopmentDashboard */
+    protected $developmentDashboard;
 
-    public function __construct(CollectorManager $collectorManager)
+    public function __construct(Dashboard $developmentDashboard)
     {
-        $this->collectorManager = $collectorManager;
+        $this->developmentDashboard = $developmentDashboard;
     }
 
     public function handle($request, Closure $next)
@@ -22,7 +22,7 @@ class DevelopmentDashboard
             return $next($request);
         }
 
-        $this->collectorManager->start();
+        $this->developmentDashboard->startCollectingData();
 
         try {
             return $next($request);
@@ -33,7 +33,7 @@ class DevelopmentDashboard
         }
         finally
         {
-            $this->collectorManager->end();
+            $this->developmentDashboard->stopCollectingData();
         }
     }
 }

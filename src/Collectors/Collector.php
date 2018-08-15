@@ -9,8 +9,8 @@ abstract class Collector
         return $this->name ?? class_basename(static::class);
     }
 
-    public function boot(): Collector {
-        return $this;
+    public function boot() {
+
     }
 
     public abstract function collectedData(): array;

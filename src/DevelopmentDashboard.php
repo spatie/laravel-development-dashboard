@@ -6,7 +6,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Spatie\DevelopmentDashboard\Collectors\Collector;
 
-class CollectorManager
+class DevelopmentDashboard
 {
     /** @var \Illuminate\Support\Collection */
     protected $collectors;
@@ -37,12 +37,19 @@ class CollectorManager
         $this->collectors->push($collector);
     }
 
-    public function start()
+    public function setCollectors(array $collectors)
+    {
+        $this->collectors = collect();
+
+        $this->addCollector($collectors);
+    }
+
+    public function startCollectingData()
     {
         $this->collectors->each->boot();
     }
 
-    public function end()
+    public function stopCollectingData()
     {
         $this->collectors
             ->mapWithKeys(function (Collector $collector) {

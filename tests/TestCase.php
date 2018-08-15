@@ -2,10 +2,13 @@
 
 namespace Spatie\DevelopmentDashboard\Tests;
 
+use Closure;
 use Illuminate\Contracts\Http\Kernel;
+use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Foundation\Testing\TestResponse;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Schema;
 use Orchestra\Testbench\TestCase as Orchestra;
 use Spatie\DevelopmentDashboard\DevelopmentDashboardServiceProvider;
 use Spatie\DevelopmentDashboard\Http\Middleware\DevelopmentDashboard;
@@ -38,6 +41,8 @@ abstract class TestCase extends Orchestra
         $app['config']->set('development-dashboard.enabled', true);
 
         $app[Kernel::class]->pushMiddleware(DevelopmentDashboard::class);
+
+        $this->setUpDatabase($app);
     }
 
     protected function initializeDirectory($directory)
@@ -46,6 +51,22 @@ abstract class TestCase extends Orchestra
             File::deleteDirectory($directory);
         }
         File::makeDirectory($directory);
+    }
+
+    protected function setUpDatabase($app)
+    {
+        $app['config']->set('database.default', 'sqlite');
+        $app['config']->set('database.connections.sqlite', [
+            'driver' => 'sqlite',
+            'database' => ':memory:',
+            'prefix' => '',
+        ]);
+
+        Schema::create('test_models', function(Blueprint $table) {
+            $table->increments('id');
+            $table->string('name')->nullable();
+            $table->timestamps();
+        });
     }
 
     public function getTempDirectory()
@@ -78,7 +99,7 @@ abstract class TestCase extends Orchestra
         return optional($latestFile)->getPathname();
     }
 
-    protected function performRequest(Callable $callable = null)
+    protected function performRequest(Closure $callable = null)
     {
         $callable = $callable ?? function () {
                 return '';

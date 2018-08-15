@@ -4,7 +4,7 @@ namespace Spatie\DevelopmentDashboard;
 
 use Illuminate\Foundation\Http\Kernel;
 use Illuminate\Support\ServiceProvider;
-use Spatie\DevelopmentDashboard\Http\Middleware\DevelopmentDashboard;
+use Spatie\DevelopmentDashboard\Http\Middleware\DevelopmentDashboard as DevelopmentDashboardMiddleware;
 
 class DevelopmentDashboardServiceProvider extends ServiceProvider
 {
@@ -18,15 +18,17 @@ class DevelopmentDashboardServiceProvider extends ServiceProvider
             ], 'config');
         }
 
-        $this->app->singleton(CollectorManager::class, function() {
-           $collectorManager = new CollectorManager();
+        $this->app->singleton(DevelopmentDashboard::class, function() {
+           $developmentDashboard = new DevelopmentDashboard();
 
-           $collectorManager->addCollector(config('development-dashboard.collectors'));
+           $developmentDashboard->addCollector(config('development-dashboard.collectors'));
 
-           return $collectorManager;
+           return $developmentDashboard;
         });
 
-        $this->app[Kernel::class]->pushMiddleware(DevelopmentDashboard::class);
+        $this->app->alias(DevelopmentDashboard::class, 'development-dashboard');
+
+        $this->app[Kernel::class]->pushMiddleware(DevelopmentDashboardMiddleware::class);
     }
 
     public function register()
