@@ -1,14 +1,16 @@
 <?php
 
-namespace Spatie\Skeleton\Tests;
-
-use PHPUnit\Framework\TestCase;
+namespace Spatie\DevelopmentDashboard\Tests;
 
 class ExampleTest extends TestCase
 {
     /** @test */
-    public function true_is_true()
+    public function it_tests()
     {
-        $this->assertTrue(true);
+        $this
+            ->performRequest()
+            ->assertJsonStructure(['laravel' => [
+                'version', 'environment', 'locale',
+            ]]);
     }
 }
