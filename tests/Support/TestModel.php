@@ -1,6 +1,6 @@
 <?php
 
-namespace Spatie\DevelopmentDashboard\Tests;
+namespace Spatie\DevelopmentDashboard\Tests\Support;
 
 use Illuminate\Database\Eloquent\Model;
 

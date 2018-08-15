@@ -79,7 +79,7 @@ abstract class TestCase extends Orchestra
     {
         $reportContent = [];
 
-        if ($report = Report::all()->first()) {
+        if ($report = $this->getLastestReport()) {
             $reportContent = $report->content();
         };
 
@@ -97,5 +97,10 @@ abstract class TestCase extends Orchestra
         $this->get('/')->assertSuccessful();
 
         return $this;
+    }
+
+    protected function getLastestReport(): ?Report
+    {
+        return Report::all()->first();
     }
 }

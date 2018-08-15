@@ -1,11 +1,11 @@
 <?php
 
-namespace Spatie\DevelopmentDashboard\Tests\Collectors;
+namespace Spatie\DevelopmentDashboard\Tests\Feature\Collectors;
 
 use Spatie\DevelopmentDashboard\Collectors\QueryCollector;
 use Spatie\DevelopmentDashboard\Facades\DevelopmentDashboard;
+use Spatie\DevelopmentDashboard\Tests\Support\TestModel;
 use Spatie\DevelopmentDashboard\Tests\TestCase;
-use Spatie\DevelopmentDashboard\Tests\TestModel;
 
 class QueryCollectorTest extends TestCase
 {

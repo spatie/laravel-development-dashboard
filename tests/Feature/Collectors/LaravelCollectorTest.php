@@ -1,6 +1,6 @@
 <?php
 
-namespace Spatie\DevelopmentDashboard\Tests\Collectors;
+namespace Spatie\DevelopmentDashboard\Tests\Feature\Collectors;
 
 use Spatie\DevelopmentDashboard\Collectors\LaravelCollector;
 use Spatie\DevelopmentDashboard\Facades\DevelopmentDashboard;

@@ -12,6 +12,7 @@ return [
     'collectors' => [
         \Spatie\DevelopmentDashboard\Collectors\LaravelCollector::class,
         \Spatie\DevelopmentDashboard\Collectors\QueryCollector::class,
+        \Spatie\DevelopmentDashboard\Collectors\RouteCollector::class,
     ],
 
 
