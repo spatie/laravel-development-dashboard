@@ -9,7 +9,7 @@ class ReportsController
 {
     public function index(Request $request)
     {
-        return Report::all($request->createdAfterTimestamp)
+        return Report::all($request->created_after_timestamp)
             ->take(100)
             ->map(function(Report $report) {
                return [

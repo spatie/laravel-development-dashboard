@@ -16,14 +16,14 @@ class Report
     {
         return collect(File::allFiles(config('development-dashboard.storage.path')))
             ->sortByDesc(function (SplFileInfo $file) {
-                return $file->getCTime();
+                return $file->getMTime();
             })
             ->filter(function (SplFileInfo $file) use ($createdAfterTimestamp) {
                 if (is_null($createdAfterTimestamp)) {
                     return true;
                 }
 
-                return $file->getCTime() >= $createdAfterTimestamp;
+                return $file->getMTime() >= $createdAfterTimestamp;
             })
             ->map(function (SplFileInfo $file) {
                 return new static($file);
@@ -33,7 +33,7 @@ class Report
 
     public static function createFromData(array $data): Report
     {
-        $fileName = 'report-' . date('Ymd-his') . '-' . Str::uuid() . '.json';
+        $fileName = 'report-' . now()->format('Ymd-his') . '-' . Str::uuid() . '.json';
 
         $fullPath = config('development-dashboard.storage.path') . '/' . $fileName;
 
@@ -50,6 +50,11 @@ class Report
     public function createdAt(): int
     {
         return $this->file->getCTime();
+    }
+
+    public function path(): string
+    {
+        return $this->file->getPathname();
     }
 
     public function content(): array
