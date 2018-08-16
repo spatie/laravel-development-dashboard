@@ -4,6 +4,8 @@ namespace Spatie\DevelopmentDashboard;
 
 use Illuminate\Foundation\Http\Kernel;
 use Illuminate\Support\ServiceProvider;
+use Spatie\DevelopmentDashboard\Http\Controllers\ReportsController;
+use Spatie\DevelopmentDashboard\Http\Middleware\Authorize;
 use Spatie\DevelopmentDashboard\Http\Middleware\CollectData;
 
 class DevelopmentDashboardServiceProvider extends ServiceProvider
@@ -29,6 +31,8 @@ class DevelopmentDashboardServiceProvider extends ServiceProvider
         $this->app->alias(DevelopmentDashboard::class, 'development-dashboard');
 
         $this->app[Kernel::class]->pushMiddleware(CollectData::class);
+
+        $this->app['router']->get('/vendor/spatie/development-dashboard/reports', ReportsController::class . '@index')->middleware(Authorize::class);
     }
 
     public function register()

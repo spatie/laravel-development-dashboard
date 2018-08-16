@@ -2,12 +2,16 @@
 
 namespace Spatie\DevelopmentDashboard;
 
+use Closure;
+use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Str;
 use Spatie\DevelopmentDashboard\Collectors\Collector;
 
 class DevelopmentDashboard
 {
+    /** @var \Closure */
+    public static $authUsing;
+
     /** @var \Illuminate\Support\Collection */
     protected $collectors;
 
@@ -58,5 +62,19 @@ class DevelopmentDashboard
             ->pipe(function(Collection $collectedData) {
                 Report::createFromData($collectedData->toArray());
             });
+    }
+
+    public static function check($request)
+    {
+        return (static::$authUsing ?? function () {
+            return config('development-dashboard.enabled');
+        })($request);
+    }
+
+    public static function auth(Closure $callback)
+    {
+        static::$authUsing = $callback;
+
+        return new static;
     }
 }
