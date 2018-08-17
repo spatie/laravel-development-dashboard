@@ -10,7 +10,7 @@ use Spatie\DevelopmentDashboard\Tests\Support\TestControllerWithParameters;
 use Spatie\DevelopmentDashboard\Tests\Support\TestModel;
 use Spatie\DevelopmentDashboard\Tests\TestCase;
 
-class RouteCollectorTestCollectorTest extends TestCase
+class RouteCollectorTest extends TestCase
 {
     public function setUp()
     {

@@ -3,9 +3,10 @@
 namespace Spatie\DevelopmentDashboard;
 
 use Closure;
-use Illuminate\Http\Request;
+use Exception;
 use Illuminate\Support\Collection;
 use Spatie\DevelopmentDashboard\Collectors\Collector;
+use Symfony\Component\HttpFoundation\Response;
 
 class DevelopmentDashboard
 {
@@ -53,11 +54,18 @@ class DevelopmentDashboard
         $this->collectors->each->boot();
     }
 
-    public function stopCollectingData()
+    public function setException(Exception $exception)
+    {
+        $this->collectors->each->setException($exception);
+    }
+
+    public function stopCollectingData(Response $response)
     {
         $this->collectors
-            ->mapWithKeys(function (Collector $collector) {
-                return [$collector->name() => $collector->collectedData()];
+            ->mapWithKeys(function (Collector $collector) use ($response) {
+                return [$collector->name() => $collector
+                    ->setResponse($response)
+                    ->collectedData()];
             })
             ->pipe(function(Collection $collectedData) {
                 Report::createFromData($collectedData->toArray());
@@ -77,4 +85,5 @@ class DevelopmentDashboard
 
         return new static;
     }
+
 }

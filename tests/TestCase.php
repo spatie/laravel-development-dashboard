@@ -40,6 +40,7 @@ abstract class TestCase extends Orchestra
 
         $app['config']->set('development-dashboard.storage.path', $this->getTempDirectory());
         $app['config']->set('development-dashboard.enabled', true);
+        $app['config']->set('app.debug', true);
 
         $app[Kernel::class]->pushMiddleware(CollectData::class);
 
@@ -86,7 +87,7 @@ abstract class TestCase extends Orchestra
         (new TestResponse(''))->assertJsonStructure($expectedStructure, $reportContent);
     }
 
-    protected function performRequest(Closure $callable = null)
+    protected function performRequest(Closure $callable = null, $responseCode = 200)
     {
         $callable = $callable ?? function () {
                 return '';
@@ -94,7 +95,7 @@ abstract class TestCase extends Orchestra
 
         Route::get('/', $callable);
 
-        $this->get('/')->assertSuccessful();
+        $this->get('/')->assertStatus($responseCode);
 
         return $this;
     }

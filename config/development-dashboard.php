@@ -13,7 +13,8 @@ return [
         \Spatie\DevelopmentDashboard\Collectors\LaravelCollector::class,
         \Spatie\DevelopmentDashboard\Collectors\QueryCollector::class,
         \Spatie\DevelopmentDashboard\Collectors\RouteCollector::class,
+        \Spatie\DevelopmentDashboard\Collectors\RequestCollector::class,
+        \Spatie\DevelopmentDashboard\Collectors\ResponseCollector::class,
+        \Spatie\DevelopmentDashboard\Collectors\ExceptionCollector::class,
     ],
-
-
 ];
