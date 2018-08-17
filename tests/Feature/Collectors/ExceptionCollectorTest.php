@@ -33,6 +33,9 @@ class ExceptionCollectorTest extends TestCase
                 'exception' => [
                     'code',
                     'message',
+                    'file',
+                    'line',
+                    'trace',
                 ],
             ]);
     }

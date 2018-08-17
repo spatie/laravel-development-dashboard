@@ -22,12 +22,7 @@ abstract class Collector
     {
         $this->response = $response;
 
-        return $this;
-    }
-
-    public function setException(Exception $exception = null)
-    {
-        $this->exception = $exception;
+        $this->exception = $response->exception;
 
         return $this;
     }
@@ -35,8 +30,6 @@ abstract class Collector
     public function boot() {
 
     }
-
-
 
     public abstract function collectedData(): array;
 }

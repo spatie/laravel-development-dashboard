@@ -33,12 +33,10 @@ class CollectData
         try {
             $response = $next($request);
         } catch (Exception $exception) {
-            $this->developmentDashboard->setException($exception);
-
             $response = $this->handleException($request, $exception);
-        } finally {
-            $this->developmentDashboard->stopCollectingData($response);
         }
+
+        $this->developmentDashboard->stopCollectingData($response);
 
         return $response;
     }

@@ -15,6 +15,9 @@ class ExceptionCollector extends Collector
         return [
             'code' => $this->exception->getCode(),
             'message' => $this->exception->getMessage(),
+            'file' => $this->exception->getFile(),
+            'line' => $this->exception->getLine(),
+            'trace' => $this->exception->getTrace(),
         ];
     }
 }

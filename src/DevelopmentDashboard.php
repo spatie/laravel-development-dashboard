@@ -54,11 +54,6 @@ class DevelopmentDashboard
         $this->collectors->each->boot();
     }
 
-    public function setException(Exception $exception)
-    {
-        $this->collectors->each->setException($exception);
-    }
-
     public function stopCollectingData(Response $response)
     {
         $this->collectors
